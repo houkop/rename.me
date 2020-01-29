@@ -1,0 +1,8 @@
+D:\visual c#\rename.me\bin\Debug\rename.me.exe
+D:\visual c#\rename.me\bin\Debug\rename.me.pdb
+D:\visual c#\rename.me\obj\Debug\rename.me.Form1.resources
+D:\visual c#\rename.me\obj\Debug\rename.me.Properties.Resources.resources
+D:\visual c#\rename.me\obj\Debug\rename.me.csproj.GenerateResource.cache
+D:\visual c#\rename.me\obj\Debug\rename.me.exe
+D:\visual c#\rename.me\obj\Debug\rename.me.pdb
+D:\visual c#\rename.me\obj\Debug\rename.me.csprojAssemblyReference.cache

@@ -1,0 +1,5 @@
+C:\Users\entei\Downloads\Exiflib\ExifLib\bin\Debug\ExifLib.dll
+C:\Users\entei\Downloads\Exiflib\ExifLib\bin\Debug\ExifLib.pdb
+C:\Users\entei\Downloads\Exiflib\ExifLib\obj\Debug\ExifLib.csproj.CoreCompileInputs.cache
+C:\Users\entei\Downloads\Exiflib\ExifLib\obj\Debug\ExifLib.dll
+C:\Users\entei\Downloads\Exiflib\ExifLib\obj\Debug\ExifLib.pdb
