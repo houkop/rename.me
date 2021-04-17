@@ -5,6 +5,3 @@ D:\visual c#\rename.me\obj\Release\rename.me.Properties.Resources.resources
 D:\visual c#\rename.me\obj\Release\rename.me.csproj.GenerateResource.cache
 D:\visual c#\rename.me\obj\Release\rename.me.exe
 D:\visual c#\rename.me\obj\Release\rename.me.pdb
-D:\visual c#\rename.me\obj\Release\rename.me.csprojAssemblyReference.cache
-D:\visual c#\rename.me\bin\Release\Rename.Me.exe.CodeAnalysisLog.xml
-D:\visual c#\rename.me\bin\Release\Rename.Me.exe.lastcodeanalysissucceeded
