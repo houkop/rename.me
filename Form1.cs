@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -21,6 +21,8 @@ namespace rename.me
 
     public partial class Form1 : Form
     {
+        public NumberFormatInfo nfi = new CultureInfo("en-US", false).NumberFormat;
+
         //объявляем списки 
         List<double> latit = new List<double>();
         List<double> longit = new List<double>();
@@ -146,9 +148,23 @@ namespace rename.me
                 string gpxfile = exportfolder + "\\" + today + "copter.gpx";
                 string pltfile = exportfolder + "\\" + today + "copter.plt";
                 //проверяем наличие в папке-получателе файла gpx и plt
+                bool folderexist = Directory.Exists(exportfolder);
                 bool fexgpx = File.Exists(gpxfile);
                 bool fexplt = File.Exists(pltfile);
                 //если файла нет - создаем и пишем заголовок
+                if (!folderexist)
+                {
+                    var ans = MessageBox.Show("Ошибка! \r\n" + "Папка назначения не найдена \r\n" + "Создать папку по данному пути?\r\n" + exportfolder, "Error", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                    if ( ans == DialogResult.Yes )
+                    {
+                        Directory.CreateDirectory(exportfolder);
+                    }
+                    else
+                    {
+                        return;
+                    }
+                    
+                }
                 if (!fexgpx)
                 {
                     //File.Create(gpxfile);
@@ -219,15 +235,15 @@ namespace rename.me
                 foreach (FileInfo f in diInfos)
                 {
                     progressBar1.Value++;
-                    //берем все что после "DJI_"
-                    string rest = f.Name.Split('_')[1];
+                    ////берем все что после "DJI_"
+                    //string rest = f.Name.Split('_')[1];
                     //проверяем что в папке назначения нет файла с таким именем
-                    bool fileex = File.Exists(exportfolder + @"\" + today + @"\" + prefix + "_" + nums + rest);
+                    bool fileex = File.Exists(exportfolder + @"\" + today + @"\" + prefix + "_" + nums.ToString("D8"));
                     //если есть - увеличиваем число в названии файла
                     while (fileex)
                     {
                         nums++;
-                        fileex = File.Exists(exportfolder + @"\" + today + @"\" + prefix + "_" + nums + rest);
+                        fileex = File.Exists(exportfolder + @"\" + today + @"\" + prefix + "_" + nums.ToString("D8"));
                     }
                     //собираем данные
                     using (var reader = new ExifReader(f.FullName))
@@ -236,12 +252,12 @@ namespace rename.me
                         if (reader.GetTagValue(ExifTags.GPSLatitude, out double[] gpslat))
                         { }
                         double reslat = Math.Round(gpslat[0] + gpslat[1] / 60 + gpslat[2] / 3600, 8);
-                        double reslatplt = Math.Round(reslat, 6);
+                        string reslatplt = (Math.Round(reslat, 6)).ToString("F6", nfi);
                         if (reader.GetTagValue(ExifTags.GPSLongitude, out double[] gpslong))
                         { }
                         double reslong = Math.Round(gpslong[0] + gpslong[1] / 60 + gpslong[2] / 3600, 8);
-                        double reslongplt = Math.Round(reslong, 6);
-
+                        string reslongplt = (Math.Round(reslong, 6)).ToString("F6", nfi);
+                        
                         if (reader.GetTagValue(ExifTags.GPSAltitude, out double gpsalt))
                         { }
 
@@ -251,7 +267,7 @@ namespace rename.me
                             if (gpsaltref == 1)
                                 gpsalt = -gpsalt;
                         }
-                        double altInFeet = Math.Round(gpsalt * 3.2808,1);
+                        string altInFeet = (Math.Round(gpsalt * 3.2808, 1)).ToString( "F1", nfi );
                         if (reader.GetTagValue(ExifTags.DateTimeOriginal, out DateTime dtorig))
                         {
                             dtorig = dtorig.AddHours(-3);
@@ -259,7 +275,7 @@ namespace rename.me
                         string dtorigstr = dtorig.ToString("yyyy-MM-ddTHH:mm:ssZ");
                         string dOrigStr = dtorig.ToString("dd-MMM-yy");
                         string tOrigStr = dtorig.ToString("H:mm:ss");
-                        double delphiDate = Math.Round(dtorig.ToOADate(),7);
+                        string delphiDate = (Math.Round(dtorig.ToOADate(),7)).ToString( "F7", nfi );
 
                         latit.Insert(numLat, reslat);
                         numLat++;
@@ -286,7 +302,8 @@ namespace rename.me
                     //перемещаем обработаннный файл
                     if (!checkBox3.Checked)
                     {
-                        File.Move(f.FullName, f.FullName.Replace(f.FullName, exportfolder + @"\" + today + @"\" + prefix + "_" + nums + rest));
+                        File.Move(f.FullName, f.FullName.Replace(f.FullName, exportfolder + @"\" + today + @"\" + prefix + "_" + nums.ToString("D8")));
+                        nums++;
                     }
 
                 }
@@ -547,5 +564,6 @@ namespace rename.me
             }
             change_label();
         }
+
     }
 }
